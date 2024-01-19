@@ -12,7 +12,10 @@
 //REFATORAR ARQUIVO!
 
 Criar Migrations
-npm run typeorm migration:generate src/database/migrations/NOME_MIGRATION
+npm run typeorm migration:generate src/infra/database/migrations/NOME_MIGRATION
 
 Executa Migrations
 npm run typeorm migration:run
+
+Voltar Migrations
+npm run typeorm migration:revert
