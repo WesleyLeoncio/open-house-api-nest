@@ -32,8 +32,8 @@ export class FilmeEntity {
   @ManyToMany(() => CategoriaEntity, { cascade: true })
   @JoinTable({
     name: 'categoria_filme',
-    joinColumn: { name: 'filme_id' },
-    inverseJoinColumn: { name: 'categoria_id' },
+    joinColumn: { name: 'filme_id', referencedColumnName: "id"},
+    inverseJoinColumn: { name: 'categoria_id',referencedColumnName: "id"},
   })
   categoria: CategoriaEntity[];
 
