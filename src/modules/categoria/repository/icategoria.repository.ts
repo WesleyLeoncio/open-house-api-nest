@@ -1,10 +1,6 @@
 import { CategoriaEntity } from '../models/entity/categoria.entity';
-import { DeleteResult } from 'typeorm';
+import { GenericRepository } from '../../utils/repository/generic.repository';
 
-export abstract class IcategoriaRepository {
-  abstract create (categoriaEntity: CategoriaEntity): Promise<CategoriaEntity>;
-  abstract update(categoriaEntity: CategoriaEntity): Promise<CategoriaEntity>;
-  abstract delete(id: string): Promise<DeleteResult>;
-  abstract findAll():Promise<CategoriaEntity[]>;
-  abstract findById(id: string):Promise<CategoriaEntity>;
+export abstract class IcategoriaRepository extends GenericRepository<CategoriaEntity> {
+
 }
