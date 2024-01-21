@@ -8,7 +8,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { RoleEntity } from '../../../role/models/entity/role.entity';
-
 @Entity({ name: 'usuarios' })
 export class UsuarioEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -20,16 +19,17 @@ export class UsuarioEntity {
   @Column({ name: 'login', length: 150, nullable: false, unique: true })
   login: string;
 
-  @Column({ name: 'senha', length: 255, nullable: false, unique: true })
+  @Column({ name: 'senha', length: 255, nullable: false })
   senha: string;
 
-  @ManyToMany(() => RoleEntity, { cascade: true })
+  @ManyToMany(() => RoleEntity, { cascade: true }, )
   @JoinTable({
     name: 'profiles',
     joinColumn: { name: 'usuario_id', referencedColumnName: "id"},
     inverseJoinColumn: { name: 'role_id',referencedColumnName: "id"},
   })
   role: RoleEntity[];
+
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

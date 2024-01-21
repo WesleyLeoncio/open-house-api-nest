@@ -12,12 +12,12 @@ export class CategoriaRepository implements IcategoriaRepository {
   ) {
   }
 
-  update(categoriaEntity: CategoriaEntity): Promise<CategoriaEntity> {
-       return this.repository.save(categoriaEntity);
+  update(entity: CategoriaEntity): Promise<CategoriaEntity> {
+       return this.repository.save(entity);
   }
 
-  create(categoriaEntity: CategoriaEntity): Promise<CategoriaEntity> {
-    return this.repository.save(categoriaEntity);
+  create(entity: CategoriaEntity): Promise<CategoriaEntity> {
+    return this.repository.save(entity);
   }
 
   findAll(): Promise<CategoriaEntity[]> {

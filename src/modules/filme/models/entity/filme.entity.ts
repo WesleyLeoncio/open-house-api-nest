@@ -17,7 +17,7 @@ export class FilmeEntity {
   @Column({ name: 'nome', length: 150, nullable: false, unique: true })
   nome: string;
 
-  @Column({ name: 'descricao', type: 'text', nullable: false, unique: true })
+  @Column({ name: 'descricao', type: 'text', nullable: false})
   descricao: string;
 
   @Column({ name: 'data_lancamento', type: 'date', nullable: false })
@@ -36,6 +36,7 @@ export class FilmeEntity {
     inverseJoinColumn: { name: 'categoria_id',referencedColumnName: "id"},
   })
   categoria: CategoriaEntity[];
+
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;
