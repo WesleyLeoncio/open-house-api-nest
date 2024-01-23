@@ -10,7 +10,7 @@ export class CategoriaController {
   }
 
   @Get()
-  listarCategorias() {
+  getCategorias() {
     return this.service.listarTodasCategorias();
   }
 

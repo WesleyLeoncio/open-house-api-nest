@@ -7,6 +7,8 @@ import { FilmeModule } from './modules/filme/filme.module';
 import { RoleModule } from './modules/role/role.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { AvaliacaoModule } from './modules/avaliacao/avaliacao.module';
+import { APP_FILTER } from '@nestjs/core';
+import { ExceptionHandlers } from './infra/exceptions/filter/exceptionHandlers';
 
 
 @Module({
@@ -24,5 +26,11 @@ import { AvaliacaoModule } from './modules/avaliacao/avaliacao.module';
       inject: [DatabaseConfigService],
     }),
   ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ExceptionHandlers
+    }
+  ]
 })
 export class AppModule {}
