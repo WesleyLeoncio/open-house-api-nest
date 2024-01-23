@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
+//TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO
 @Catch()
 export class ExceptionHandlers implements ExceptionFilter {
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
