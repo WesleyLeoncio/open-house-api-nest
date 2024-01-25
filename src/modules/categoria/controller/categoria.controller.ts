@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CategoriaService } from '../service/categoria.service';
-import { CategoriaCreatRequest } from '../models/request/categoriaCreat.request';
 import { DeleteResult } from 'typeorm';
+import { CategoriaRequest } from '../models/request/categoria.request';
 
 @Controller('/categorias')
 export class CategoriaController {
@@ -20,12 +20,12 @@ export class CategoriaController {
   }
 
   @Post()
-  criarCategoria(@Body() categoria: CategoriaCreatRequest) {
+  criarCategoria(@Body() categoria: CategoriaRequest) {
     return this.service.criarCategoria(categoria);
   }
 
   @Put('/:id')
-  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaCreatRequest) {
+  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaRequest) {
     return this.service.atualizarCategoria(id, categoria);
   }
 

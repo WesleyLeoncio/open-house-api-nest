@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CategoriaEntity } from '../models/entity/categoria.entity';
 import { IcategoriaRepository } from '../repository/icategoria.repository';
-import { CategoriaCreatRequest } from '../models/request/categoriaCreat.request';
 import { DeleteResult } from 'typeorm';
+import { CategoriaRequest } from '../models/request/categoria.request';
+import { MapperCategoria } from '../models/mapper/mapperCategoria';
 
 @Injectable()
 export class CategoriaService {
@@ -20,17 +21,16 @@ export class CategoriaService {
     return await this.verificarCategoria(id);
   }
 
-  async atualizarCategoria(id: string, categoriaRequest: CategoriaCreatRequest): Promise<CategoriaEntity> {
-    const categoriaEntity: CategoriaEntity =  await this.verificarCategoria(id);
-    Object.assign(categoriaEntity, categoriaRequest);
-    return await this.categoriaRepository.update(categoriaEntity);
+  async atualizarCategoria(id: string, request: CategoriaRequest): Promise<CategoriaEntity> {
+    const entity: CategoriaEntity =  await this.verificarCategoria(id);
+    Object.assign(entity, <CategoriaEntity>request);
+    return await this.categoriaRepository.update(entity);
   }
 
 
-  async criarCategoria(categoria: CategoriaCreatRequest): Promise<CategoriaEntity> {
-    const categoriaEntity: CategoriaEntity = new CategoriaEntity();
-    categoriaEntity.nome = categoria.nome;
-    return await this.categoriaRepository.create(categoriaEntity);
+  async criarCategoria(request: CategoriaRequest): Promise<CategoriaEntity> {
+    const entity: CategoriaEntity = MapperCategoria.categoriaRequestToCategoriaEntity(request);
+    return await this.categoriaRepository.create(entity);
   }
 
   async deletarCategoria(id: string): Promise<DeleteResult> {
