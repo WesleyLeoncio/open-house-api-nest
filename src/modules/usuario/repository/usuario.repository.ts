@@ -35,4 +35,10 @@ export class UsuarioRepository implements IusuarioRepository {
     });
   }
 
+  findByLogin(login: string): Promise<UsuarioEntity> {
+    return this.repository.findOne({
+      where: { login: login },
+    });
+  }
+
 }

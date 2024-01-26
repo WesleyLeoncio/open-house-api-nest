@@ -9,6 +9,7 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 import { AvaliacaoModule } from './modules/avaliacao/avaliacao.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionHandlers } from './infra/exceptions/filter/exceptionHandlers';
+import { AutenticacaoModule } from './modules/autenticacao/autenticacao.module';
 
 
 @Module({
@@ -18,6 +19,7 @@ import { ExceptionHandlers } from './infra/exceptions/filter/exceptionHandlers';
     RoleModule,
     UsuarioModule,
     AvaliacaoModule,
+    AutenticacaoModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

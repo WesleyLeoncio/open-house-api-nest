@@ -16,7 +16,8 @@ import { RoleEntity } from '../role/models/entity/role.entity';
       provide: IusuarioRepository,
       useClass: UsuarioRepository
     }
-  ]
+  ],
+  exports: [UsuarioService]
 
 })
 export class UsuarioModule {
