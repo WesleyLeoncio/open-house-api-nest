@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { IusuarioRepository } from '../repository/iusuario.repository';
 import { UsuarioEntity } from '../models/entity/usuario.entity';
 import { UsuarioRequest } from '../models/request/usuarioRequest';
+import { MapperUsuario } from '../models/mapper/mapperUsuario';
+import { Bcrypt } from '../../security/bcrypt';
 
 @Injectable()
 export class UsuarioService {
@@ -11,13 +13,10 @@ export class UsuarioService {
   ) {
   }
 
-  async createUsuario(usuario: UsuarioRequest){
-    const usuarioEntity = new UsuarioEntity();
-    usuarioEntity.nome = usuario.nome;
-    usuarioEntity.login = usuario.login;
-    usuarioEntity.senha = usuario.senha;
-    usuarioEntity.role = usuario.role;
-    return await this.usuarioRepository.create(usuarioEntity);
+  async createUsuario(request: UsuarioRequest){
+    request.senha = await Bcrypt.passwordHash(request.senha);
+    const entity: UsuarioEntity = MapperUsuario.usuarioRequestToUsuarioEntity(request);
+    return await this.usuarioRepository.create(entity);
   }
 
   async getUsuarios(){
