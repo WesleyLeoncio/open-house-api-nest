@@ -12,5 +12,5 @@ export class UsuarioRequest {
   senha: string;
   @IsArray()
   @ArrayMinSize(1)
-  role: RoleEntity[];
+  roles: RoleEntity[];
 }

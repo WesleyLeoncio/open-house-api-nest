@@ -28,7 +28,7 @@ export class UsuarioEntity {
     joinColumn: { name: 'usuario_id', referencedColumnName: "id"},
     inverseJoinColumn: { name: 'role_id',referencedColumnName: "id"},
   })
-  role: RoleEntity[];
+  roles: RoleEntity[];
 
 
   @CreateDateColumn({ name: 'created_at' })

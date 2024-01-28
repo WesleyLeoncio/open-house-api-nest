@@ -4,7 +4,8 @@ import { DeleteResult } from 'typeorm';
 import { CategoriaRequest } from '../models/request/categoria.request';
 import { AutenticacaoGuard } from '../../autenticacao/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../autenticacao/guard/roleGuard';
-import { Roles } from '../../autenticacao/guard/decorators/roles.decorator';
+import { PreAuthorize } from '../../autenticacao/guard/decorators/PreAuthorize.decorator';
+import { Roles } from '../../role/models/enum/Roles';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
 @Controller('/categorias')
@@ -14,7 +15,7 @@ export class CategoriaController {
   }
 
   @Get()
-  @Roles(['ROLE_ADMIN'])
+  @PreAuthorize([Roles.ADMIN])
   getCategorias() {
     return this.service.listarTodasCategorias();
   }
