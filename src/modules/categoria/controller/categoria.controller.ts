@@ -1,8 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { CategoriaService } from '../service/categoria.service';
 import { DeleteResult } from 'typeorm';
 import { CategoriaRequest } from '../models/request/categoria.request';
+import { AutenticacaoGuard } from '../../autenticacao/guard/AutenticacaoGuard';
+import { RolesGuard } from '../../autenticacao/guard/roleGuard';
+import { Roles } from '../../autenticacao/guard/decorators/roles.decorator';
 
+@UseGuards(AutenticacaoGuard,RolesGuard)
 @Controller('/categorias')
 export class CategoriaController {
 
@@ -10,6 +14,7 @@ export class CategoriaController {
   }
 
   @Get()
+  @Roles(['ROLE_ADMIN'])
   getCategorias() {
     return this.service.listarTodasCategorias();
   }

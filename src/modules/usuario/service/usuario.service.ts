@@ -28,4 +28,10 @@ export class UsuarioService {
     if (!usuario) throw new NotFoundException('Usuário Incorreto!');
     return usuario;
   }
+
+  async verificarUsuarioById(id: string):Promise<UsuarioEntity>{
+    const usuario: UsuarioEntity = await this.usuarioRepository.findById(id);
+    if (!usuario) throw new NotFoundException('Usuário Incorreto!');
+    return usuario;
+  }
 }

@@ -31,6 +31,9 @@ export class UsuarioRepository implements IusuarioRepository {
 
   findById(id: string): Promise<UsuarioEntity> {
     return this.repository.findOne({
+      relations: {
+        role: true
+      },
       where: { id: id },
     });
   }

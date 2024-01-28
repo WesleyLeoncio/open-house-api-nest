@@ -20,7 +20,7 @@ import { ConfigService } from '@nestjs/config';
   ],
   controllers: [AutenticacaoController],
   providers: [
-    AutenticacaoService
+    AutenticacaoService,
   ]
 })
 
