@@ -14,6 +14,7 @@ export class CategoriaService {
   }
 
   async listarTodasCategorias(): Promise<CategoriaEntity[]> {
+    console.log("FOI NO BD!")
     return await this.categoriaRepository.findAll();
   }
 

@@ -3,18 +3,21 @@ import {
   Catch,
   ArgumentsHost,
   HttpException,
-  HttpStatus,
+  HttpStatus, ConsoleLogger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
 //TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO
 @Catch()
 export class ExceptionHandlers implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+  constructor(
+    private readonly httpAdapterHost: HttpAdapterHost,
+    private readonly loggerNativo: ConsoleLogger
+  ) {}
 
   catch(exception: unknown, host: ArgumentsHost): void {
-    // In certain situations `httpAdapter` might not be available in the
-    // constructor method, thus we should resolve it here.
+    this.loggerNativo.error(exception);
+
     const { httpAdapter } = this.httpAdapterHost;
 
     const ctx = host.switchToHttp();
@@ -36,4 +39,5 @@ export class ExceptionHandlers implements ExceptionFilter {
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
   }
+
 }
