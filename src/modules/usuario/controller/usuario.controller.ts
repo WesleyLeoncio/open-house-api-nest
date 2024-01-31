@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsuarioService } from '../service/usuario.service';
 import { UsuarioRequest } from '../models/request/usuarioRequest';
 
@@ -14,7 +14,7 @@ export class UsuarioController {
   }
 
   @Get()
-  getUsuarios(){
-    return this.service.getUsuarios();
+  getUsuarios(@Query() { page, size, filter }) {
+    return this.service.getUsuarios(page, size, filter);
   }
 }

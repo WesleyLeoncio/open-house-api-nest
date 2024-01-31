@@ -3,6 +3,7 @@ import { IavaliacaoRepository } from './iavaliacao.repository';
 import { AvaliacaoDeFilmesEntity } from '../models/entity/avaliacaoDeFilmes.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
+import { Pagination } from '../../utils/pageable/models/pagination';
 
 
 @Injectable()
@@ -26,27 +27,30 @@ export class AvaliacaoRepository implements IavaliacaoRepository {
     return this.repository.delete(id);
   }
 
-  findAll(): Promise<AvaliacaoDeFilmesEntity[]> {
-    return this.repository.find({
-      relations: {
-        usuario:true,
-        filme: true
-      }
-    });
+  findAll(pagination: Pagination): Promise<[AvaliacaoDeFilmesEntity[], number]> {
+    return this.repository.findAndCount(
+      {
+        take: pagination.take,
+        skip: pagination.skip,
+        relations: [
+          "filme", "filme.categorias"
+        ]
+      },
+    );
   }
 
   //TODO REFATORAR ESTÁ ERRADO
   findById(id: string): Promise<AvaliacaoDeFilmesEntity> {
-    console.log(id)
+    console.log(id);
     return this.repository.findOne({
       relations: {
-        usuario:true,
-        filme: true
+        usuario: true,
+        filme: true,
       },
       where: {
         usuarioId: '7d1e017d-dac8-4dba-b380-6b0b9cd84def',
-        filmeId: '5974bd89-5ba7-4e1b-998a-8cded889066a'
-      }
+        filmeId: '5974bd89-5ba7-4e1b-998a-8cded889066a',
+      },
     });
   }
 

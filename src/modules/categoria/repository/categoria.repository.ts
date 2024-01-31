@@ -1,8 +1,9 @@
 import { CategoriaEntity } from '../models/entity/categoria.entity';
 import { IcategoriaRepository } from './icategoria.repository';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { Pagination } from '../../utils/pageable/models/pagination';
 
 @Injectable()
 export class CategoriaRepository implements IcategoriaRepository {
@@ -13,15 +14,21 @@ export class CategoriaRepository implements IcategoriaRepository {
   }
 
   update(entity: CategoriaEntity): Promise<CategoriaEntity> {
-       return this.repository.save(entity);
+    return this.repository.save(entity);
   }
 
   create(entity: CategoriaEntity): Promise<CategoriaEntity> {
     return this.repository.save(entity);
   }
 
-  findAll(): Promise<CategoriaEntity[]> {
-    return this.repository.find();
+  findAll(pagination: Pagination): Promise<[CategoriaEntity[], number]> {
+    return this.repository.findAndCount(
+      {
+        where: { 'nome': Like('%' + pagination.filter + '%') },
+        take: pagination.take,
+        skip: pagination.skip,
+      },
+    );
   }
 
   findById(id: string): Promise<CategoriaEntity> {

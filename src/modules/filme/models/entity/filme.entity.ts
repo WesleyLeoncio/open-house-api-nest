@@ -35,7 +35,7 @@ export class FilmeEntity {
     joinColumn: { name: 'filme_id', referencedColumnName: "id"},
     inverseJoinColumn: { name: 'categoria_id',referencedColumnName: "id"},
   })
-  categoria: CategoriaEntity[];
+  categorias: CategoriaEntity[];
 
 
   @CreateDateColumn({ name: 'created_at' })

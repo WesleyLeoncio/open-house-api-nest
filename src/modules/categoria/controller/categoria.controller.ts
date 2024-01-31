@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CategoriaService } from '../service/categoria.service';
 import { DeleteResult } from 'typeorm';
 import { CategoriaRequest } from '../models/request/categoria.request';
@@ -17,9 +17,9 @@ export class CategoriaController {
 
   @Get()
   @PreAuthorize([Roles.ADMIN])
-  @UseInterceptors(CacheInterceptor) //TODO CACHE REDIS
-  getCategorias() {
-    return this.service.listarTodasCategorias();
+  // @UseInterceptors(CacheInterceptor) //TODO CACHE REDIS
+  getCategorias(@Query() { page, size, filter }) {
+    return this.service.listarTodas(page, size, filter);
   }
 
   @Get('/:id')

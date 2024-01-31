@@ -1,8 +1,9 @@
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Like, Repository } from 'typeorm';
 import { FilmeEntity } from '../models/entity/filme.entity';
 import { IfilmeRepository } from './ifilme.repository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Pagination } from '../../utils/pageable/models/pagination';
 
 @Injectable()
 export class FilmeRepository implements IfilmeRepository {
@@ -25,10 +26,13 @@ export class FilmeRepository implements IfilmeRepository {
     return this.repository.delete(id);
   }
 
-  findAll(): Promise<FilmeEntity[]> {
-    return this.repository.find({
+  findAll(pagination: Pagination):Promise<[FilmeEntity[], number]> {
+    return this.repository.findAndCount({
+      where: {'nome': Like('%' + pagination.filter + '%')},
+      take: pagination.take,
+      skip: pagination.skip,
       relations: {
-        categoria: true,
+        categorias: true,
       },
     });
   }
@@ -36,7 +40,7 @@ export class FilmeRepository implements IfilmeRepository {
   findById(id: string): Promise<FilmeEntity> {
     return this.repository.findOne({
       relations: {
-        categoria: true,
+        categorias: true,
       },
       where: {
         id: id,

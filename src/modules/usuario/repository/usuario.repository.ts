@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Like, Repository } from 'typeorm';
 import { IusuarioRepository } from './iusuario.repository';
 import { UsuarioEntity } from '../models/entity/usuario.entity';
+import { Pagination } from '../../utils/pageable/models/pagination';
 
 @Injectable()
 export class UsuarioRepository implements IusuarioRepository {
@@ -25,12 +26,17 @@ export class UsuarioRepository implements IusuarioRepository {
     return this.repository.delete(id);
   }
 
-  findAll(): Promise<UsuarioEntity[]> {
-    return this.repository.find({
-      relations: {
-        roles: true,
-      },
-    });
+  async findAll(pagination: Pagination): Promise<[UsuarioEntity[], number]> {
+    return await this.repository.findAndCount(
+      {
+        where: {'nome': Like('%' + pagination.filter + '%')},
+        take: pagination.take,
+        skip: pagination.skip,
+        relations: {
+          roles: true,
+        },
+      }
+    )
   }
 
   findById(id: string): Promise<UsuarioEntity> {

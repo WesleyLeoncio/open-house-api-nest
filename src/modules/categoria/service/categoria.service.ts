@@ -4,6 +4,8 @@ import { IcategoriaRepository } from '../repository/icategoria.repository';
 import { DeleteResult } from 'typeorm';
 import { CategoriaRequest } from '../models/request/categoria.request';
 import { MapperCategoria } from '../models/mapper/mapperCategoria';
+import { Pageable } from '../../utils/pageable/pageable';
+import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 
 @Injectable()
 export class CategoriaService {
@@ -13,9 +15,10 @@ export class CategoriaService {
   ) {
   }
 
-  async listarTodasCategorias(): Promise<CategoriaEntity[]> {
-    console.log("FOI NO BD!")
-    return await this.categoriaRepository.findAll();
+  async listarTodas(page: number, size: number, filter: string): Promise<PageableResponse<CategoriaEntity>> {
+    const pageable: Pageable<CategoriaEntity> = new Pageable(page, size, filter);
+    const [content, totalElements] = await this.categoriaRepository.findAll(pageable.pagination);
+    return pageable.getPageableData(totalElements, content);
   }
 
   async buscarPorId(id: string) {
@@ -23,7 +26,7 @@ export class CategoriaService {
   }
 
   async atualizarCategoria(id: string, request: CategoriaRequest): Promise<CategoriaEntity> {
-    const entity: CategoriaEntity =  await this.verificarCategoria(id);
+    const entity: CategoriaEntity = await this.verificarCategoria(id);
     Object.assign(entity, <CategoriaEntity>request);
     return await this.categoriaRepository.update(entity);
   }
@@ -39,7 +42,7 @@ export class CategoriaService {
     return await this.categoriaRepository.delete(id);
   }
 
-  private async verificarCategoria(id: string): Promise<CategoriaEntity>{
+  private async verificarCategoria(id: string): Promise<CategoriaEntity> {
     const categoria = await this.categoriaRepository.findById(id);
     if (!categoria) throw new NotFoundException('Categoria não encontrada!');
     return categoria;

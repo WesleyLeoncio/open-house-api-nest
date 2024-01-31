@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { IavaliacaoRepository } from '../repository/iavaliacao.repository';
 import { AvaliacaoDeFilmesEntity } from '../models/entity/avaliacaoDeFilmes.entity';
+import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
+import { Pageable } from '../../utils/pageable/pageable';
 
 @Injectable()
 export class AvaliacaoService {
@@ -8,8 +10,10 @@ export class AvaliacaoService {
     private readonly avaliacaoRepository: IavaliacaoRepository,
   ) {}
 
-  async listarTodos(): Promise<AvaliacaoDeFilmesEntity[]> {
-    return await this.avaliacaoRepository.findAll();
+  async listarTodos(page: number, size: number, filter: string):Promise<PageableResponse<AvaliacaoDeFilmesEntity>> {
+    const pageable: Pageable<AvaliacaoDeFilmesEntity> = new Pageable(page, size, filter);
+    const [content, totalElements] = await this.avaliacaoRepository.findAll(pageable.pagination);
+    return pageable.getPageableData(totalElements, content);
   }
 
   async criarAvaliacao(): Promise<AvaliacaoDeFilmesEntity> {

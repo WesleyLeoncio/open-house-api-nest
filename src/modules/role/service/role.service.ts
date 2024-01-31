@@ -17,8 +17,6 @@ export class RoleService {
     return await this.roleRepository.create(roleEntity);
   }
 
-  async getRoles(){
-    return await this.roleRepository.findAll();
-  }
+
 
 }

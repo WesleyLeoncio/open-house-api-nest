@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { FilmeService } from '../service/filme.service';
 
 @Controller('/filmes')
@@ -7,8 +7,8 @@ export class FilmeController {
   }
 
   @Get()
-  async listarFilmes() {
-    return this.service.listarTodosFilmes();
+  async listarFilmes(@Query() { page, size, filter }) {
+    return this.service.listarTodosFilmes(page, size, filter);
   }
 
 

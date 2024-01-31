@@ -7,10 +7,10 @@ export class RoleController {
 
   constructor(private readonly service: RoleService) {}
 
-  @Get()
-  getRoles(){
-    return this.service.getRoles();
-  }
+  // @Get()
+  // getRoles(){
+  //   return this.service.getRoles();
+  // }
 
   @Post()
   createRole(@Body() role: RoleRequest){

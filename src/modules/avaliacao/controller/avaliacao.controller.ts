@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { AvaliacaoService } from '../service/avaliacao.service';
 
 @Controller('/avaliacoes')
@@ -8,8 +8,8 @@ export class AvaliacaoController {
   }
 
   @Get()
-  async listarAvaliacoes() {
-    return this.service.listarTodos();
+  async listarAvaliacoes(@Query() { page, size, filter }) {
+    return this.service.listarTodos(page, size, filter);
   }
 
   @Get('/teste')
