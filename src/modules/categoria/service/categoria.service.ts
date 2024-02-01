@@ -6,6 +6,7 @@ import { CategoriaRequest } from '../models/request/categoria.request';
 import { MapperCategoria } from '../models/mapper/mapperCategoria';
 import { Pageable } from '../../utils/pageable/pageable';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
+import { CategoriaResponse } from '../models/response/CategoriaResponse';
 
 @Injectable()
 export class CategoriaService {
@@ -15,14 +16,14 @@ export class CategoriaService {
   ) {
   }
 
-  async listarTodas(page: number, size: number, filter: string): Promise<PageableResponse<CategoriaEntity>> {
-    const pageable: Pageable<CategoriaEntity> = new Pageable(page, size, filter);
+  async listarTodas(page: number, size: number, filter: string): Promise<PageableResponse<CategoriaResponse>> {
+    const pageable: Pageable<CategoriaResponse> = new Pageable(page, size, filter);
     const [content, totalElements] = await this.categoriaRepository.findAll(pageable.pagination);
-    return pageable.getPageableData(totalElements, content);
+    return pageable.getPageableData(totalElements, MapperCategoria.categoriaEntityListToCategoriaResponseList(content));
   }
 
-  async buscarPorId(id: string) {
-    return await this.verificarCategoria(id);
+  async buscarPorId(id: string): Promise<CategoriaResponse> {
+    return MapperCategoria.categoriaEntityToCategoriaResponse(await this.verificarCategoria(id));
   }
 
   async atualizarCategoria(id: string, request: CategoriaRequest): Promise<CategoriaEntity> {

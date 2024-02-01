@@ -7,6 +7,8 @@ import { RolesGuard } from '../../security/guard/roleGuard';
 import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decorator';
 import { Roles } from '../../role/models/enum/Roles';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
+import { CategoriaResponse } from '../models/response/CategoriaResponse';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
 @Controller('/categorias')
@@ -18,12 +20,12 @@ export class CategoriaController {
   @Get()
   @PreAuthorize([Roles.ADMIN])
   // @UseInterceptors(CacheInterceptor) //TODO CACHE REDIS
-  getCategorias(@Query() { page, size, filter }) {
+  listarCategorias(@Query() { page, size, filter }): Promise<PageableResponse<CategoriaResponse>> {
     return this.service.listarTodas(page, size, filter);
   }
 
   @Get('/:id')
-  buscarCategoriasPorId(@Param('id') id: string) {
+  buscarCategoriasPorId(@Param('id') id: string): Promise<CategoriaResponse>  {
     return this.service.buscarPorId(id);
   }
 
