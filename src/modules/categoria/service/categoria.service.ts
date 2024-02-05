@@ -18,7 +18,7 @@ export class CategoriaService {
 
   async listarTodas(page: number, size: number, filter: string): Promise<PageableResponse<CategoriaResponse>> {
     const pageable: Pageable<CategoriaResponse> = new Pageable(page, size, filter);
-    const [content, totalElements] = await this.categoriaRepository.findAll(pageable.pagination);
+    const [content, totalElements ] = await this.categoriaRepository.findAll(pageable.pagination);
     return pageable.getPageableData(totalElements, MapperCategoria.categoriaEntityListToCategoriaResponseList(content));
   }
 
@@ -26,16 +26,17 @@ export class CategoriaService {
     return MapperCategoria.categoriaEntityToCategoriaResponse(await this.verificarCategoria(id));
   }
 
-  async atualizarCategoria(id: string, request: CategoriaRequest): Promise<CategoriaEntity> {
+  async atualizarCategoria(id: string, request: CategoriaRequest): Promise<CategoriaResponse> {
     const entity: CategoriaEntity = await this.verificarCategoria(id);
     Object.assign(entity, <CategoriaEntity>request);
-    return await this.categoriaRepository.update(entity);
+    return MapperCategoria.categoriaEntityToCategoriaResponse(
+      await this.categoriaRepository.create(entity));
   }
 
 
-  async criarCategoria(request: CategoriaRequest): Promise<CategoriaEntity> {
+  async criarCategoria(request: CategoriaRequest): Promise<CategoriaResponse> {
     const entity: CategoriaEntity = MapperCategoria.categoriaRequestToCategoriaEntity(request);
-    return await this.categoriaRepository.create(entity);
+    return MapperCategoria.categoriaEntityToCategoriaResponse(await this.categoriaRepository.create(entity));
   }
 
   async deletarCategoria(id: string): Promise<DeleteResult> {

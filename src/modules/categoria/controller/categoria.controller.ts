@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CategoriaService } from '../service/categoria.service';
 import { DeleteResult } from 'typeorm';
 import { CategoriaRequest } from '../models/request/categoria.request';
@@ -9,6 +21,7 @@ import { Roles } from '../../role/models/enum/Roles';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { CategoriaResponse } from '../models/response/CategoriaResponse';
+
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
 @Controller('/categorias')
@@ -30,16 +43,17 @@ export class CategoriaController {
   }
 
   @Post()
-  criarCategoria(@Body() categoria: CategoriaRequest) {
+  criarCategoria(@Body() categoria: CategoriaRequest): Promise<CategoriaResponse>  {
     return this.service.criarCategoria(categoria);
   }
 
   @Put('/:id')
-  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaRequest) {
+  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaRequest): Promise<CategoriaResponse>  {
     return this.service.atualizarCategoria(id, categoria);
   }
 
   @Delete('/:id')
+  @HttpCode(204)
   deletarCategoria(@Param('id') id: string): Promise<DeleteResult> {
     return this.service.deletarCategoria(id);
   }
