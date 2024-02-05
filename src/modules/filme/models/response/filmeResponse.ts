@@ -1,6 +1,7 @@
 import { CategoriaResponse } from '../../../categoria/models/response/CategoriaResponse';
 
 export class FilmeResponse {
+
   id: string;
 
   nome: string;

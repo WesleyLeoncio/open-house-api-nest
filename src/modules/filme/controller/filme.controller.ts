@@ -1,7 +1,9 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { FilmeService } from '../service/filme.service';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { FilmeResponse } from '../models/response/filmeResponse';
+import { DeleteResult } from 'typeorm';
+import { FilmeRequest } from '../models/request/filme.request';
 
 @Controller('/filmes')
 export class FilmeController {
@@ -13,5 +15,25 @@ export class FilmeController {
     return this.service.listarTodosFilmes(page, size, filter);
   }
 
+  @Get('/:id')
+  buscarFilmesPorId(@Param('id') id: string): Promise<FilmeResponse> {
+    return this.service.buscarPorId(id);
+  }
+
+  @Post()
+  criarCategoria(@Body() filme: FilmeRequest): Promise<FilmeResponse> {
+    return this.service.criarFilme(filme);
+  }
+
+  @Put('/:id')
+  alterarCategoria(@Param('id') id: string, @Body() filme: FilmeRequest): Promise<FilmeResponse> {
+    return this.service.atualizarFilme(id, filme);
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  deletarCategoria(@Param('id') id: string): Promise<DeleteResult> {
+    return this.service.deletarFilme(id);
+  }
 
 }

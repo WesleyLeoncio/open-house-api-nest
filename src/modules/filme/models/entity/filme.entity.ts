@@ -29,7 +29,7 @@ export class FilmeEntity {
   @Column({ name: 'imagem', length: 100, nullable: false })
   imagem: string;
 
-  @ManyToMany(() => CategoriaEntity, { cascade: true })
+  @ManyToMany(() => CategoriaEntity, { cascade: ["insert"] })
   @JoinTable({
     name: 'categoria_filme',
     joinColumn: { name: 'filme_id', referencedColumnName: "id"},

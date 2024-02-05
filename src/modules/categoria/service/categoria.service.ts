@@ -30,7 +30,7 @@ export class CategoriaService {
     const entity: CategoriaEntity = await this.verificarCategoria(id);
     Object.assign(entity, <CategoriaEntity>request);
     return MapperCategoria.categoriaEntityToCategoriaResponse(
-      await this.categoriaRepository.create(entity));
+      await this.categoriaRepository.update(entity));
   }
 
 

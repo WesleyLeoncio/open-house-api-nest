@@ -2,8 +2,15 @@ import { FilmeEntity } from '../entity/filme.entity';
 import { FilmeResponse } from '../response/filmeResponse';
 
 import { MapperCategoria } from '../../../categoria/models/mapper/mapperCategoria';
+import { FilmeRequest } from '../request/filme.request';
 
 export class MapperFilme {
+
+  static filmeRequestToFilmeEntity(request: FilmeRequest): FilmeEntity{
+    const entity: FilmeEntity = new FilmeEntity();
+    Object.assign(entity, <FilmeEntity>request);
+    return entity;
+  }
 
   static filmeEntityToFilmeResponse(entity: FilmeEntity): FilmeResponse{
     return new FilmeResponse(
