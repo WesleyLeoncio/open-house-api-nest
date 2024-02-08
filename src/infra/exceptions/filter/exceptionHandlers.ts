@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 
-//TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO
+//TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO / TRATAR OS ERROS DO CLASS VALIDATOR
 @Catch()
 export class ExceptionHandlers implements ExceptionFilter {
   constructor(
@@ -17,6 +17,7 @@ export class ExceptionHandlers implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost): void {
     this.loggerNativo.error(exception);
+    console.log(exception)
 
     const { httpAdapter } = this.httpAdapterHost;
 
@@ -27,8 +28,9 @@ export class ExceptionHandlers implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const httpMensagem = exception instanceof HttpException
+    const httpMensagem: string = exception instanceof HttpException
       ? exception.message : 'INTERNAL SERVER ERROR';
+
 
     const responseBody = {
       statusCode: httpStatus,

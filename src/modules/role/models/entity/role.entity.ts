@@ -13,7 +13,7 @@ export class RoleEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'nome', type: 'enum', enum:Roles, nullable: false})
+  @Column({ name: 'nome', type: 'enum', enum:Roles, nullable: false, unique:true})
   nome: Roles;
 
   @CreateDateColumn({ name: 'created_at' })

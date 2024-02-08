@@ -23,7 +23,7 @@ import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { CategoriaResponse } from '../models/response/CategoriaResponse';
 
 
-@UseGuards(AutenticacaoGuard,RolesGuard)
+// @UseGuards(AutenticacaoGuard,RolesGuard)
 @Controller('/categorias')
 export class CategoriaController {
 
@@ -31,7 +31,7 @@ export class CategoriaController {
   }
 
   @Get()
-  @PreAuthorize([Roles.ADMIN])
+  // @PreAuthorize([Roles.ADMIN])
   // @UseInterceptors(CacheInterceptor) //TODO CACHE REDIS
   listarCategorias(@Query() { page, size, filter }): Promise<PageableResponse<CategoriaResponse>> {
     return this.service.listarTodas(page, size, filter);

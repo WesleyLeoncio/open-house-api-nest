@@ -1,4 +1,4 @@
-export enum Roles {
+export enum Roles { //TODO REFATORAR O NOME DO ENUM
   MASTER = 'ROLE_MASTER',
   ADMIN = 'ROLE_ADMIN',
   USER = 'ROLE_USER',

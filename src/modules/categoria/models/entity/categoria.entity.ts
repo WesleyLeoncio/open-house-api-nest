@@ -7,13 +7,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-//TODO REFATORAR E ADICIONAR ENUM NO NOME
+
 @Entity({ name: 'categorias' })
 export class CategoriaEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'nome', length: 100, nullable: false, unique: true })
+  @Column({ name: 'nome', length: 50, nullable: false, unique:true })
+
   nome: string;
 
   @CreateDateColumn({ name: 'created_at' })
