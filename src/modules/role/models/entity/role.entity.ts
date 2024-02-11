@@ -6,15 +6,14 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Roles } from '../enum/Roles';
 
 @Entity({ name: 'roles' })
 export class RoleEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'nome', type: 'enum', enum:Roles, nullable: false, unique:true})
-  nome: Roles;
+  @Column({ name: 'nome', length: 50, nullable: false, unique:true})
+  nome: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: string;

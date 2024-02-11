@@ -1,7 +1,7 @@
 import { Roles } from '../enum/Roles';
-import { IsNotEmpty } from 'class-validator';
+import { IsEnum } from 'class-validator';
 
 export class RoleRequest {
-  @IsNotEmpty()
+  @IsEnum(Roles)
   nome: Roles;
 }
