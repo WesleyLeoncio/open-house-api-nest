@@ -20,7 +20,7 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../../role/models/enum/Roles';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
-import { CategoriaResponse } from '../models/response/CategoriaResponse';
+import { CategoriaResponse } from '../models/response/categoriaResponse';
 
 
 // @UseGuards(AutenticacaoGuard,RolesGuard)

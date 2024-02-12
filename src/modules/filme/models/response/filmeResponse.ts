@@ -1,4 +1,4 @@
-import { CategoriaResponse } from '../../../categoria/models/response/CategoriaResponse';
+import { CategoriaResponse } from '../../../categoria/models/response/categoriaResponse';
 
 export class FilmeResponse {
 

@@ -1,6 +1,6 @@
 import { CategoriaEntity } from '../entity/categoria.entity';
 import { CategoriaRequest } from '../request/categoria.request';
-import { CategoriaResponse } from '../response/CategoriaResponse';
+import { CategoriaResponse } from '../response/categoriaResponse';
 
 export class MapperCategoria {
 

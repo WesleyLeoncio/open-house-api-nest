@@ -6,7 +6,7 @@ import { CategoriaRequest } from '../models/request/categoria.request';
 import { MapperCategoria } from '../models/mapper/mapperCategoria';
 import { Pageable } from '../../utils/pageable/pageable';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
-import { CategoriaResponse } from '../models/response/CategoriaResponse';
+import { CategoriaResponse } from '../models/response/categoriaResponse';
 
 @Injectable()
 export class CategoriaService {
