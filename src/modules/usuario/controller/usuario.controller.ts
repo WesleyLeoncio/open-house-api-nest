@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { UsuarioService } from '../service/usuario.service';
 import { UsuarioRequest } from '../models/request/usuarioRequest';
+import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
+import { UsuarioResponse } from '../models/response/usuarioResponse';
+import { DeleteResult } from 'typeorm';
 
 @Controller('/usuarios')
 export class UsuarioController {
@@ -9,12 +12,30 @@ export class UsuarioController {
   }
 
   @Post()
-  createUsuario(@Body() usuarioRequest: UsuarioRequest){
-    return this.service.createUsuario(usuarioRequest);
+  createUsuario(@Body() usuarioRequest: UsuarioRequest): Promise<UsuarioResponse> {
+    return this.service.criarUsuario(usuarioRequest);
   }
 
   @Get()
-  getUsuarios(@Query() { page, size, filter }) {
-    return this.service.getUsuarios(page, size, filter);
+  async listarUsuario(@Query() { page, size, filter }): Promise<PageableResponse<UsuarioResponse>> {
+    return this.service.listarTodosUsuarios(page, size, filter);
   }
+
+  @Get('/:id')
+  buscarUsuarioPorId(@Param('id') id: string): Promise<UsuarioResponse> {
+    return this.service.buscarPorId(id);
+  }
+
+
+  @Put('/:id')
+  alterarUsuario(@Param('id') id: string, @Body() usuario: UsuarioRequest): Promise<UsuarioResponse> {
+    return this.service.atualizarUsario(id, usuario);
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  deletarUsuario(@Param('id') id: string): Promise<DeleteResult> {
+    return this.service.deletarUsuario(id);
+  }
+
 }

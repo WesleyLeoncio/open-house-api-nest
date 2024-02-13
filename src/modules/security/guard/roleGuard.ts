@@ -26,7 +26,7 @@ export class RolesGuard implements CanActivate {
   }
 
   private async verificarRoles(roles: Roles[], userId: string): Promise<boolean> {
-    const usuario: UsuarioEntity = await this.usuarioService.verificarUsuarioById(userId);
+    const usuario: UsuarioEntity = await this.usuarioService.verificarUsuario(userId);
     return usuario.roles.map((role: RoleEntity) => role.nome).some((role: Roles) => roles.includes(role));
   }
 }

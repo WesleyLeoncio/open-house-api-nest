@@ -22,6 +22,9 @@ export class UsuarioEntity {
   @Column({ name: 'senha', length: 255, nullable: false })
   senha: string;
 
+  @Column({ name: 'status', type: 'boolean', default: true,nullable: false })
+  status: boolean;
+
   @ManyToMany(() => RoleEntity, { cascade: true }, )
   @JoinTable({
     name: 'profiles',

@@ -16,23 +16,23 @@ export class FilmeController {
   }
 
   @Get('/:id')
-  buscarFilmesPorId(@Param('id') id: string): Promise<FilmeResponse> {
+  buscarFilmePorId(@Param('id') id: string): Promise<FilmeResponse> {
     return this.service.buscarPorId(id);
   }
 
   @Post()
-  criarCategoria(@Body() filme: FilmeRequest): Promise<FilmeResponse> {
+  criarFilme(@Body() filme: FilmeRequest): Promise<FilmeResponse> {
     return this.service.criarFilme(filme);
   }
 
   @Put('/:id')
-  alterarCategoria(@Param('id') id: string, @Body() filme: FilmeRequest): Promise<FilmeResponse> {
+  alterarFilme(@Param('id') id: string, @Body() filme: FilmeRequest): Promise<FilmeResponse> {
     return this.service.atualizarFilme(id, filme);
   }
 
   @Delete('/:id')
   @HttpCode(204)
-  deletarCategoria(@Param('id') id: string): Promise<DeleteResult> {
+  deletarFilme(@Param('id') id: string): Promise<DeleteResult> {
     return this.service.deletarFilme(id);
   }
 
