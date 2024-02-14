@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { IavaliacaoRepository } from './iavaliacao.repository';
 import { AvaliacaoDeFilmesEntity } from '../models/entity/avaliacaoDeFilmes.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
 import { Pagination } from '../../utils/pageable/models/pagination';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
@@ -15,16 +15,17 @@ export class AvaliacaoRepository implements IavaliacaoRepository {
   ) {
   }
 
-  create(entity: AvaliacaoDeFilmesEntity): Promise<AvaliacaoDeFilmesEntity> {
-    return this.repository.save(entity);
+  findByIds(filmeId: string, usuarioId: string): Promise<AvaliacaoDeFilmesEntity> {
+    return this.repository.findOne({
+      where: {
+        usuarioId: usuarioId,
+        filmeId: filmeId,
+      },
+    });
   }
 
-  update(entity: AvaliacaoDeFilmesEntity): Promise<AvaliacaoDeFilmesEntity> {
+  avaliar(entity: AvaliacaoDeFilmesEntity): Promise<AvaliacaoDeFilmesEntity> {
     return this.repository.save(entity);
-  }
-
-  delete(id: string): Promise<DeleteResult> {
-    return this.repository.delete(id);
   }
 
   findAll(pagination: Pagination): Promise<[AvaliacaoDeFilmesEntity[], number]> {
@@ -33,23 +34,21 @@ export class AvaliacaoRepository implements IavaliacaoRepository {
         take: pagination.take,
         skip: pagination.skip,
         relations: [
-          "filme", "filme.categorias"
-        ]
+          'filme', 'filme.categorias',
+        ],
       },
     );
   }
 
-  //TODO REFATORAR ESTÁ ERRADO
-  findById(id: string): Promise<AvaliacaoDeFilmesEntity> {
-    console.log(id);
-    return this.repository.findOne({
-      relations: {
-        usuario: true,
-        filme: true,
-      },
+  findByUsuarioId(usuarioId: string, pagination: Pagination): Promise<[AvaliacaoDeFilmesEntity[], number]> {
+    return this.repository.findAndCount({
+      take: pagination.take,
+      skip: pagination.skip,
+      relations: [
+        'filme', 'filme.categorias',
+      ],
       where: {
-        usuarioId: '7d1e017d-dac8-4dba-b380-6b0b9cd84def',
-        filmeId: '5974bd89-5ba7-4e1b-998a-8cded889066a',
+        usuarioId: usuarioId,
       },
     });
   }

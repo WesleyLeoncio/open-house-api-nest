@@ -15,7 +15,8 @@ import { FilmeService } from './service/filme.service';
       provide: IfilmeRepository,
       useClass: FilmeRepository
     },
-  ]
+  ],
+  exports: [FilmeService]
 
 })
 export class FilmeModule {
