@@ -4,6 +4,7 @@ import { UsuarioRequest } from '../models/request/usuarioRequest';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { UsuarioResponse } from '../models/response/usuarioResponse';
 import { DeleteResult } from 'typeorm';
+import { UsuarioRequestComum } from '../models/request/usuarioRequestComum';
 
 @Controller('/usuarios')
 export class UsuarioController {
@@ -14,6 +15,11 @@ export class UsuarioController {
   @Post()
   createUsuario(@Body() usuarioRequest: UsuarioRequest): Promise<UsuarioResponse> {
     return this.service.criarUsuario(usuarioRequest);
+  }
+
+  @Post('/comum')
+  createUsuarioComum(@Body() request: UsuarioRequestComum): Promise<UsuarioResponse> {
+    return this.service.criarUsuarioComum(request);
   }
 
   @Get()
@@ -30,6 +36,12 @@ export class UsuarioController {
   @Put('/:id')
   alterarUsuario(@Param('id') id: string, @Body() usuario: UsuarioRequest): Promise<UsuarioResponse> {
     return this.service.atualizarUsario(id, usuario);
+  }
+
+  @Put('/modificarStatus/:id')
+  @HttpCode(204)
+  alterarStatusUsuario(@Param('id') id: string): void{
+     this.service.atualizarStatus(id);
   }
 
   @Delete('/:id')

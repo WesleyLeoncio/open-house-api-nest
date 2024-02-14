@@ -14,6 +14,12 @@ export class RoleRepository implements IroleRepository {
   ) {
   }
 
+  findByRole(nome: string): Promise<RoleEntity> {
+    return this.repository.findOne({
+      where: {nome: nome}
+    });
+  }
+
   create(entity: RoleEntity): Promise<RoleEntity> {
     return this.repository.save(entity);
   }

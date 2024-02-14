@@ -48,4 +48,10 @@ export class RoleService {
     if (!role) throw new NotFoundException('Role não encontrada!');
     return role;
   }
+
+  async buscarRolePeloNome(nome: string): Promise<RoleEntity>{
+    const role: RoleEntity = await this.roleRepository.findByRole(nome);
+    if (!role) throw new NotFoundException('Essa role não existe!');
+    return role;
+  }
 }

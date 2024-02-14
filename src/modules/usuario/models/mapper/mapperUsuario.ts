@@ -2,10 +2,17 @@ import { UsuarioRequest } from '../request/usuarioRequest';
 import { UsuarioEntity } from '../entity/usuario.entity';
 import { UsuarioResponse } from '../response/usuarioResponse';
 import { MapperRole } from '../../../role/models/mapper/mapperRole';
+import { UsuarioRequestComum } from '../request/usuarioRequestComum';
 
 
 export class MapperUsuario {
   static usuarioRequestToUsuarioEntity(request: UsuarioRequest): UsuarioEntity{
+    const entity: UsuarioEntity = new UsuarioEntity();
+    Object.assign(entity, <UsuarioEntity>request);
+    return entity;
+  }
+
+  static usuarioRequestComumToUsuarioEntity(request: UsuarioRequestComum): UsuarioEntity{
     const entity: UsuarioEntity = new UsuarioEntity();
     Object.assign(entity, <UsuarioEntity>request);
     return entity;

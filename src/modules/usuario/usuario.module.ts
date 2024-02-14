@@ -5,10 +5,11 @@ import { UsuarioService } from './service/usuario.service';
 import { UsuarioController } from './controller/usuario.controller';
 import { IusuarioRepository } from './repository/iusuario.repository';
 import { UsuarioRepository } from './repository/usuario.repository';
-import { RoleEntity } from '../role/models/entity/role.entity';
+import { RoleModule } from '../role/role.module';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuarioEntity, RoleEntity])],
+  imports: [TypeOrmModule.forFeature([UsuarioEntity]),RoleModule],
   controllers: [UsuarioController],
   providers: [
     UsuarioService,
