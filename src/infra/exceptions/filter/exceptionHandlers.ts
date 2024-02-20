@@ -2,44 +2,52 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpException,
-  HttpStatus, ConsoleLogger,
+  ConsoleLogger, HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
+import { HttpArgumentsHost } from '@nestjs/common/interfaces';
+
+import { HttpExceptionError } from '../validations/httpExceptionError';
+import { ValidationPiperError } from '../validations/validationPiperError';
+import { ResponseMessage } from '../models/responseMessage';
+import { ValidationStrategy } from '../strategy/validationStrategy';
+
 
 //TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO / TRATAR OS ERROS DO CLASS VALIDATOR
 @Catch()
 export class ExceptionHandlers implements ExceptionFilter {
+
+  private strategy = new ValidationStrategy(
+    [
+      new HttpExceptionError(),
+      new ValidationPiperError()
+    ],
+  );
+
   constructor(
     private readonly httpAdapterHost: HttpAdapterHost,
-    private readonly loggerNativo: ConsoleLogger
-  ) {}
+    private readonly loggerNativo: ConsoleLogger,
+  ) {
+  }
 
   catch(exception: unknown, host: ArgumentsHost): void {
     this.loggerNativo.error(exception);
-    console.log(exception)
 
     const { httpAdapter } = this.httpAdapterHost;
+    const ctx: HttpArgumentsHost = host.switchToHttp();
 
-    const ctx = host.switchToHttp();
+    let responseBody: ResponseMessage = this.strategy.verificarErros(exception, ctx, httpAdapter);
 
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    if (!responseBody) {
+      responseBody = new ResponseMessage(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        new Date().toISOString(),
+        httpAdapter.getRequestUrl(ctx.getRequest()),
+        'INTERNAL SERVER ERROR',
+      );
+    }
 
-    const httpMensagem: string = exception instanceof HttpException
-      ? exception.message : 'INTERNAL SERVER ERROR';
-
-
-    const responseBody = {
-      statusCode: httpStatus,
-      timestamp: new Date().toISOString(),
-      path: httpAdapter.getRequestUrl(ctx.getRequest()),
-      message: httpMensagem
-    };
-
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+    httpAdapter.reply(ctx.getResponse(), responseBody, responseBody.statusCode);
   }
 
 }

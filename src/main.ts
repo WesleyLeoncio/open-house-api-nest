@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationError, ValidationPipe } from '@nestjs/common';
+import { ValidationExeption } from './infra/exceptions/ValidationExeption';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +10,10 @@ async function bootstrap() {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
+      exceptionFactory: (validationErrors: ValidationError[] = []) => {
+        return new ValidationExeption(validationErrors);
+      },
+
     })
   );
   await app.listen(3000);
