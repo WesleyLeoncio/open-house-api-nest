@@ -11,6 +11,7 @@ import { HttpExceptionError } from '../validations/httpExceptionError';
 import { ValidationPiperError } from '../validations/validationPiperError';
 import { ResponseMessage } from '../models/responseMessage';
 import { ValidationStrategy } from '../strategy/validationStrategy';
+import { QueryFailedCustomError } from '../validations/queryFailedCustomError';
 
 
 //TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO / TRATAR OS ERROS DO CLASS VALIDATOR
@@ -20,7 +21,8 @@ export class ExceptionHandlers implements ExceptionFilter {
   private strategy = new ValidationStrategy(
     [
       new HttpExceptionError(),
-      new ValidationPiperError()
+      new ValidationPiperError(),
+      new QueryFailedCustomError()
     ],
   );
 
