@@ -1,19 +1,19 @@
-import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty } from 'class-validator';
+import { ArrayMinSize, IsArray, IsEmail, IsNotEmpty} from 'class-validator';
 import { RoleRequest } from '../../../role/models/request/roleRequest';
 
 
 
-export class UsuarioRequest { //TODO TRATAR CORRETAMENTE OS VALIDATIONS
-  @IsNotEmpty()
+export class UsuarioRequest {
+  @IsNotEmpty({message: "Nome do usuario deve ser preenchido!"})
   nome: string;
 
-  @IsEmail()
+  @IsEmail({}, {message: "Esse email não é valido, ex: email@email.com"})
   login: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: "A senha deve ser preenchida!"})
   senha: string;
 
   @IsArray()
-  @ArrayMinSize(1)
+  @ArrayMinSize(1, {message: "Usuario deve ter no minimo uma role"})
   roles: RoleRequest[];
 }

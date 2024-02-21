@@ -1,13 +1,13 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class UsuarioRequestComum { //TODO TRATAR CORRETAMENTE OS VALIDATIONS
-  @IsNotEmpty()
+export class UsuarioRequestComum {
+  @IsNotEmpty({message: "Nome do usuario deve ser preenchido!"})
   nome: string;
 
-  @IsEmail()
+  @IsEmail({}, {message: "Esse email não é valido, ex: email@email.com"})
   login: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({message: "A senha deve ser preenchida!"})
   senha: string;
 
 

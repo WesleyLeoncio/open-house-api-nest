@@ -1,5 +1,6 @@
-import { IsNotEmpty } from 'class-validator';
+import { ArrayMinSize, IsArray, IsDateString, IsNotEmpty } from 'class-validator';
 import { CategoriaFilmeRequest } from '../../../categoria/models/request/categoria.filme.request';
+
 
 export class FilmeRequest {
   @IsNotEmpty({ message: 'Nome do Filme deve ser preenchido!' })
@@ -9,6 +10,7 @@ export class FilmeRequest {
   descricao: string;
 
   @IsNotEmpty({ message: 'Data do Filme deve ser preenchido!' })
+  @IsDateString({}, { message: 'A data de lançamento deve ser uma data valida!' })
   dataLancamento: Date;
 
   @IsNotEmpty({ message: 'Duração do Filme deve ser preenchido!' })
@@ -17,6 +19,7 @@ export class FilmeRequest {
   @IsNotEmpty({ message: 'Imagem do Filme deve ser preenchido!' })
   imagem: string;
 
-  @IsNotEmpty({ message: 'Categorias do Filme deve ser preenchido!' })
+  @IsArray()
+  @ArrayMinSize(1, {message: "O Filme deve ter no minimo uma categoria"})
   categorias: CategoriaFilmeRequest[];
 }

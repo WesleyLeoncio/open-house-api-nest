@@ -25,7 +25,7 @@ export class UsuarioEntity {
   @Column({ name: 'status', type: 'boolean', default: true,nullable: false })
   status: boolean;
 
-  @ManyToMany(() => RoleEntity, { cascade: true }, )
+  @ManyToMany(() => RoleEntity, { cascade: ["insert"]}, )
   @JoinTable({
     name: 'profiles',
     joinColumn: { name: 'usuario_id', referencedColumnName: "id"},
