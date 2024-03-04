@@ -10,8 +10,10 @@ import { Roles } from '../../role/models/enum/Roles';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
 import { Public } from '../../security/guard/decorators/Public.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
+@ApiTags('usuarios')
 @Controller('/usuarios')
 export class UsuarioController {
 

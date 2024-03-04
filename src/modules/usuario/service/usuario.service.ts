@@ -39,8 +39,6 @@ export class UsuarioService {
   }
 
 
-  //TODO ALTERAR STATUS DO USUARIO
-
   async listarTodosUsuarios(page: number, size: number, filter: string): Promise<PageableResponse<UsuarioResponse>> {
     const pageable: Pageable<UsuarioResponse> = new Pageable(page, size, filter);
     const [content, totalElements] = await this.usuarioRepository.findAll(pageable.pagination);
@@ -53,6 +51,7 @@ export class UsuarioService {
 
   async atualizarUsario(id: string, request: UsuarioRequest): Promise<UsuarioResponse> {
     const entity: UsuarioEntity = await this.verificarUsuario(id);
+    request.senha = await Bcrypt.passwordHash(request.senha);
     Object.assign(entity, <UsuarioEntity>request);
     return MapperUsuario.usuarioEntityToUsuarioResponse(await this.usuarioRepository.update(entity));
   }

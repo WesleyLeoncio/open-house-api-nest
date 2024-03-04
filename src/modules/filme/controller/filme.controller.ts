@@ -21,8 +21,10 @@ import { Roles } from '../../role/models/enum/Roles';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
+@ApiTags('filmes')
 @Controller('/filmes')
 export class FilmeController {
   constructor(private readonly service: FilmeService) {

@@ -8,8 +8,10 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../models/enum/Roles';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
+@ApiTags('roles')
 @Controller('/roles')
 export class RoleController {
 

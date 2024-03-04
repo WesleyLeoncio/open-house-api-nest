@@ -19,9 +19,11 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../../role/models/enum/Roles';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { CategoriaResponse } from '../models/response/categoriaResponse';
+import { ApiTags } from '@nestjs/swagger';
 
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
+@ApiTags('categorias')
 @Controller('/categorias')
 export class CategoriaController {
 

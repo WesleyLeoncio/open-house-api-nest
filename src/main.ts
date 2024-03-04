@@ -22,6 +22,11 @@ async function bootstrap() {
     .setDescription('API DE FILMES')
     .setVersion('1.0')
     .addTag('filmes')
+    .addTag('categorias')
+    .addTag('roles')
+    .addTag('usuarios')
+    .addTag('avaliações')
+    .addTag('autenticação')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
