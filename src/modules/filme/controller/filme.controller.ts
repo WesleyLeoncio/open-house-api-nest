@@ -21,11 +21,12 @@ import { Roles } from '../../role/models/enum/Roles';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
-@ApiTags('filmes')
+@ApiTags('Endpoints De Filmes')
 @Controller('/filmes')
+@ApiBearerAuth('KEY_AUTH')
 export class FilmeController {
   constructor(private readonly service: FilmeService) {
   }
@@ -33,6 +34,9 @@ export class FilmeController {
   @Get()
   @PreAuthorize([Roles.USER])
   @UseInterceptors(CacheInterceptor)
+  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'size', required: false, type: 'number' })
+  @ApiQuery({ name: 'filter', required: false, type: 'string' })
   async listarFilmes(@Query() { page, size, filter }): Promise<PageableResponse<FilmeResponse>> {
     return this.service.listarTodosFilmes(page, size, filter);
   }

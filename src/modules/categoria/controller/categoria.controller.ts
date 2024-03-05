@@ -19,12 +19,13 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../../role/models/enum/Roles';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { CategoriaResponse } from '../models/response/categoriaResponse';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
-@ApiTags('categorias')
+@ApiTags('Endpoints De Categorias')
 @Controller('/categorias')
+@ApiBearerAuth('KEY_AUTH')
 export class CategoriaController {
 
   constructor(private readonly service: CategoriaService) {
@@ -32,6 +33,9 @@ export class CategoriaController {
 
   @Get()
   @PreAuthorize([Roles.ADMIN])
+  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'size', required: false, type: 'number' })
+  @ApiQuery({ name: 'filter', required: false, type: 'string' })
   listarCategorias(@Query() { page, size, filter }): Promise<PageableResponse<CategoriaResponse>> {
     return this.service.listarTodas(page, size, filter);
   }

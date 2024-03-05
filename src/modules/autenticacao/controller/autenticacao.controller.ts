@@ -3,7 +3,7 @@ import { LoginRequest } from '../models/request/loginRequest';
 import { AutenticacaoService } from '../service/autenticacao.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Token } from '../models/jwt/token';
-@ApiTags('autenticação')
+@ApiTags('Endpoint De Login')
 @Controller('/login')
 export class AutenticacaoController {
 

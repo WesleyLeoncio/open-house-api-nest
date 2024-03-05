@@ -8,11 +8,12 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../models/enum/Roles';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
-@ApiTags('roles')
+@ApiTags('Endpoints De Roles')
 @Controller('/roles')
+@ApiBearerAuth('KEY_AUTH')
 export class RoleController {
 
   constructor(private readonly service: RoleService) {
@@ -21,6 +22,9 @@ export class RoleController {
 
   @Get()
   @PreAuthorize([Roles.MASTER])
+  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'size', required: false, type: 'number' })
+  @ApiQuery({ name: 'filter', required: false, type: 'string' })
   listarRoles(@Query() { page, size, filter }): Promise<PageableResponse<RoleResponse>> {
     return this.service.listarTodas(page, size, filter);
   }

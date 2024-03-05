@@ -8,11 +8,12 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../../role/models/enum/Roles';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AutenticacaoGuard,RolesGuard)
-@ApiTags('avaliações')
+@ApiTags('Endpoints De Avaliar Filmes')
 @Controller('/avaliacoes')
+@ApiBearerAuth('KEY_AUTH')
 export class AvaliacaoController {
 
   constructor(private readonly service: AvaliacaoService) {
@@ -26,6 +27,9 @@ export class AvaliacaoController {
 
   @Get('/user/:id')
   @PreAuthorize([Roles.USER])
+  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'size', required: false, type: 'number' })
+  @ApiQuery({ name: 'filter', required: false, type: 'string' })
   async listarAvaliacoesPorUsuario(@Param('id') id: string, @Query() {
     page,
     size,
