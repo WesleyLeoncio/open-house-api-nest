@@ -29,14 +29,14 @@ export class UsuarioRepository implements IusuarioRepository {
   async findAll(pagination: Pagination): Promise<[UsuarioEntity[], number]> {
     return await this.repository.findAndCount(
       {
-        where: {'nome': Like('%' + pagination.filter + '%')},
+        where: { 'nome': Like('%' + pagination.filter + '%') },
         take: pagination.take,
         skip: pagination.skip,
         relations: {
           roles: true,
         },
-      }
-    )
+      },
+    );
   }
 
   findById(id: string): Promise<UsuarioEntity> {

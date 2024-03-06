@@ -6,13 +6,13 @@ import { UsuarioRequestComum } from '../request/usuarioRequestComum';
 
 
 export class MapperUsuario {
-  static usuarioRequestToUsuarioEntity(request: UsuarioRequest): UsuarioEntity{
+  static usuarioRequestToUsuarioEntity(request: UsuarioRequest): UsuarioEntity {
     const entity: UsuarioEntity = new UsuarioEntity();
     Object.assign(entity, <UsuarioEntity>request);
     return entity;
   }
 
-  static usuarioRequestComumToUsuarioEntity(request: UsuarioRequestComum): UsuarioEntity{
+  static usuarioRequestComumToUsuarioEntity(request: UsuarioRequestComum): UsuarioEntity {
     const entity: UsuarioEntity = new UsuarioEntity();
     Object.assign(entity, <UsuarioEntity>request);
     return entity;
@@ -24,7 +24,7 @@ export class MapperUsuario {
       entity.nome,
       entity.login,
       MapperRole.roleEntityListToRoleResponseList(entity.roles),
-      entity.status
+      entity.status,
     );
   }
 
@@ -34,7 +34,7 @@ export class MapperUsuario {
       entity.nome,
       entity.login,
       MapperRole.roleEntityListToRoleResponseList(entity.roles),
-      entity.status
+      entity.status,
     ));
   }
 

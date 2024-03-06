@@ -49,7 +49,7 @@ export class RoleService {
     return role;
   }
 
-  async buscarRolePeloNome(nome: string): Promise<RoleEntity>{
+  async buscarRolePeloNome(nome: string): Promise<RoleEntity> {
     const role: RoleEntity = await this.roleRepository.findByRole(nome);
     if (!role) throw new NotFoundException('Essa role não existe!');
     return role;

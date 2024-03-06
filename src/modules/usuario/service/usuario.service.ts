@@ -13,7 +13,6 @@ import { Roles } from '../../role/models/enum/Roles';
 import { UsuarioRequestComum } from '../models/request/usuarioRequestComum';
 import { RoleEntity } from '../../role/models/entity/role.entity';
 
-
 @Injectable()
 export class UsuarioService {
 
@@ -29,7 +28,6 @@ export class UsuarioService {
     return MapperUsuario.usuarioEntityToUsuarioResponse(await this.usuarioRepository.create(entity));
   }
 
-  //TODO CRIAR USUARIO COMUM
   async criarUsuarioComum(request: UsuarioRequestComum): Promise<UsuarioResponse> {
     const role: RoleEntity = await this.roleService.buscarRolePeloNome(Roles.USER);
     request.senha = await Bcrypt.passwordHash(request.senha);

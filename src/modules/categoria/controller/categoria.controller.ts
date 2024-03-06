@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
   Post,
   Put,
@@ -19,10 +18,17 @@ import { PreAuthorize } from '../../security/guard/decorators/PreAuthorize.decor
 import { Roles } from '../../role/models/enum/Roles';
 import { PageableResponse } from '../../utils/pageable/models/pageableResponse';
 import { CategoriaResponse } from '../models/response/categoriaResponse';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
 
-@UseGuards(AutenticacaoGuard,RolesGuard)
+@UseGuards(AutenticacaoGuard, RolesGuard)
 @ApiTags('Endpoints De Categorias')
 @Controller('/categorias')
 @ApiBearerAuth('KEY_AUTH')
@@ -33,34 +39,41 @@ export class CategoriaController {
 
   @Get()
   @PreAuthorize([Roles.ADMIN])
-  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'page', required: false, type: 'number' })
   @ApiQuery({ name: 'size', required: false, type: 'number' })
   @ApiQuery({ name: 'filter', required: false, type: 'string' })
+  @ApiOkResponse({ type: PageableResponse<CategoriaResponse> })
   listarCategorias(@Query() { page, size, filter }): Promise<PageableResponse<CategoriaResponse>> {
     return this.service.listarTodas(page, size, filter);
   }
 
   @Get('/:id')
   @PreAuthorize([Roles.ADMIN])
-  buscarCategoriasPorId(@Param('id') id: string): Promise<CategoriaResponse>  {
+  @ApiOkResponse({ type: CategoriaResponse })
+  buscarCategoriasPorId(@Param('id') id: string): Promise<CategoriaResponse> {
     return this.service.buscarPorId(id);
   }
 
   @Post()
   @PreAuthorize([Roles.ADMIN])
-  criarCategoria(@Body() categoria: CategoriaRequest): Promise<CategoriaResponse>  {
+  @ApiCreatedResponse({
+    description: 'Categoria Cadastrada com sucesso!',
+    type: CategoriaResponse,
+  })
+  criarCategoria(@Body() categoria: CategoriaRequest): Promise<CategoriaResponse> {
     return this.service.criarCategoria(categoria);
   }
 
   @Put('/:id')
   @PreAuthorize([Roles.ADMIN])
-  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaRequest): Promise<CategoriaResponse>  {
+  @ApiOkResponse({ type: CategoriaResponse })
+  alterarCategoria(@Param('id') id: string, @Body() categoria: CategoriaRequest): Promise<CategoriaResponse> {
     return this.service.atualizarCategoria(id, categoria);
   }
 
   @Delete('/:id')
   @PreAuthorize([Roles.ADMIN])
-  @HttpCode(204)
+  @ApiNoContentResponse({ description: 'Removido com sucesso!' })
   deletarCategoria(@Param('id') id: string): Promise<DeleteResult> {
     return this.service.deletarCategoria(id);
   }

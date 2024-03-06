@@ -8,12 +8,13 @@ export class AutenticacaoGuard implements CanActivate {
 
   constructor(
     private jwtService: JwtService,
-    private readonly reflector: Reflector
+    private readonly reflector: Reflector,
   ) {
   }
+
   async canActivate(contexto: ExecutionContext): Promise<boolean> {
     const requisicao = contexto.switchToHttp().getRequest();
-    const isPublic:boolean = this.reflector.get<boolean>("isPublic", contexto.getHandler());
+    const isPublic: boolean = this.reflector.get<boolean>('isPublic', contexto.getHandler());
 
     if (isPublic) return true;
 

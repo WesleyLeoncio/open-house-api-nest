@@ -10,9 +10,16 @@ import { Roles } from '../../role/models/enum/Roles';
 import { AutenticacaoGuard } from '../../security/guard/AutenticacaoGuard';
 import { RolesGuard } from '../../security/guard/roleGuard';
 import { Public } from '../../security/guard/decorators/Public.decorator';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
-@UseGuards(AutenticacaoGuard,RolesGuard)
+@UseGuards(AutenticacaoGuard, RolesGuard)
 @ApiTags('Endpoints De Usuários')
 @Controller('/usuarios')
 export class UsuarioController {
@@ -23,6 +30,10 @@ export class UsuarioController {
   @Post()
   @PreAuthorize([Roles.MASTER])
   @ApiBearerAuth('KEY_AUTH')
+  @ApiCreatedResponse({
+    description: 'Usuario Cadastrada com sucesso!',
+    type: UsuarioResponse,
+  })
   createUsuario(@Body() usuarioRequest: UsuarioRequest): Promise<UsuarioResponse> {
     return this.service.criarUsuario(usuarioRequest);
   }
@@ -30,6 +41,10 @@ export class UsuarioController {
 
   @Post('/comum')
   @Public()
+  @ApiCreatedResponse({
+    description: 'Usuario Cadastrada com sucesso!',
+    type: UsuarioResponse,
+  })
   createUsuarioComum(@Body() request: UsuarioRequestComum): Promise<UsuarioResponse> {
     return this.service.criarUsuarioComum(request);
   }
@@ -37,9 +52,10 @@ export class UsuarioController {
   @Get()
   @PreAuthorize([Roles.MASTER, Roles.ADMIN])
   @ApiBearerAuth('KEY_AUTH')
-  @ApiQuery({ name: 'page', required: false, type: 'number'})
+  @ApiQuery({ name: 'page', required: false, type: 'number' })
   @ApiQuery({ name: 'size', required: false, type: 'number' })
   @ApiQuery({ name: 'filter', required: false, type: 'string' })
+  @ApiOkResponse({ type: PageableResponse<UsuarioResponse> })
   async listarUsuarios(@Query() { page, size, filter }): Promise<PageableResponse<UsuarioResponse>> {
     return this.service.listarTodosUsuarios(page, size, filter);
   }
@@ -47,6 +63,7 @@ export class UsuarioController {
   @Get('/:id')
   @PreAuthorize([Roles.MASTER, Roles.ADMIN])
   @ApiBearerAuth('KEY_AUTH')
+  @ApiOkResponse({ type: UsuarioResponse })
   buscarUsuarioPorId(@Param('id') id: string): Promise<UsuarioResponse> {
     return this.service.buscarPorId(id);
   }
@@ -55,6 +72,7 @@ export class UsuarioController {
   @Put('/:id')
   @PreAuthorize([Roles.MASTER])
   @ApiBearerAuth('KEY_AUTH')
+  @ApiOkResponse({ type: UsuarioResponse })
   alterarUsuario(@Param('id') id: string, @Body() usuario: UsuarioRequest): Promise<UsuarioResponse> {
     return this.service.atualizarUsario(id, usuario);
   }
@@ -63,14 +81,16 @@ export class UsuarioController {
   @PreAuthorize([Roles.MASTER])
   @HttpCode(204)
   @ApiBearerAuth('KEY_AUTH')
-  alterarStatusUsuario(@Param('id') id: string): void{
-     this.service.atualizarStatus(id).finally();
+  @ApiNoContentResponse({ description: 'Status alterado com sucesso!' })
+  alterarStatusUsuario(@Param('id') id: string): void {
+    this.service.atualizarStatus(id).finally();
   }
 
   @Delete('/:id')
   @PreAuthorize([Roles.MASTER])
   @HttpCode(204)
   @ApiBearerAuth('KEY_AUTH')
+  @ApiNoContentResponse({ description: 'Removido com sucesso!' })
   deletarUsuario(@Param('id') id: string): Promise<DeleteResult> {
     return this.service.deletarUsuario(id);
   }

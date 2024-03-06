@@ -14,10 +14,10 @@ import { UsuarioModule } from '../usuario/usuario.module';
     FilmeService,
     {
       provide: IfilmeRepository,
-      useClass: FilmeRepository
+      useClass: FilmeRepository,
     },
   ],
-  exports: [FilmeService]
+  exports: [FilmeService],
 
 })
 export class FilmeModule {

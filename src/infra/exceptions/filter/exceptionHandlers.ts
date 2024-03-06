@@ -13,16 +13,14 @@ import { ResponseMessage } from '../models/responseMessage';
 import { ValidationStrategy } from '../strategy/validationStrategy';
 import { QueryFailedCustomError } from '../validations/queryFailedCustomError';
 
-
-//TODO REFATORAR / TENTAR APLICAR PADRÃO DE PROJETO / TRATAR OS ERROS DO CLASS VALIDATOR
 @Catch()
 export class ExceptionHandlers implements ExceptionFilter {
 
-  private strategy = new ValidationStrategy(
+  private strategy: ValidationStrategy = new ValidationStrategy(
     [
       new HttpExceptionError(),
       new ValidationPiperError(),
-      new QueryFailedCustomError()
+      new QueryFailedCustomError(),
     ],
   );
 

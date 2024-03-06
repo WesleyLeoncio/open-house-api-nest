@@ -1,5 +1,5 @@
-export interface Payload{
-  id: string,
-  nome: string,
-  login: string,
+export abstract class Payload {
+  id: string;
+  nome: string;
+  login: string;
 }

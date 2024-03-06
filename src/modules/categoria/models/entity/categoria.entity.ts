@@ -13,7 +13,7 @@ export class CategoriaEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'nome', length: 50, nullable: false, unique:true })
+  @Column({ name: 'nome', length: 50, nullable: false, unique: true })
   nome: string;
 
   @CreateDateColumn({ name: 'created_at' })

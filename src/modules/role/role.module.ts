@@ -15,10 +15,10 @@ import { UsuarioModule } from '../usuario/usuario.module';
     RoleService,
     {
       provide: IroleRepository,
-      useClass: RoleRepository
-    }
+      useClass: RoleRepository,
+    },
   ],
-  exports: [RoleService]
+  exports: [RoleService],
 
 })
 export class RoleModule {

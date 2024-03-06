@@ -18,7 +18,7 @@ export class CategoriaService {
 
   async listarTodas(page: number, size: number, filter: string): Promise<PageableResponse<CategoriaResponse>> {
     const pageable: Pageable<CategoriaResponse> = new Pageable(page, size, filter);
-    const [content, totalElements ] = await this.categoriaRepository.findAll(pageable.pagination);
+    const [content, totalElements] = await this.categoriaRepository.findAll(pageable.pagination);
     return pageable.getPageableData(totalElements, MapperCategoria.categoriaEntityListToCategoriaResponseList(content));
   }
 

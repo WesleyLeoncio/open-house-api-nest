@@ -22,13 +22,12 @@ O desenvolvimento dessa API tem como objetivo criar uma aplicação que seja cap
 ### O QUE FOI DESENVOLVIDO
 - CRUD - FILMES
 - CRUD- USUARIOS
-- AVALIAÇÃO DE FILMES (REGRA DE NEGOCIO)
+- AVALIAÇÃO DE FILMES
 - AUTENTICAÇÃO
 - AUTORIZAÇÃO
 
 ### DOCUMENTAÇÃO SWAGGER
 - `http://localhost:3000/api#/`
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ### COMANDOS BASICOS NODE/NESTJS
 - Instalar Dependencias: `npm install`

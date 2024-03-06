@@ -10,7 +10,6 @@ import { IroleRepository } from '../role/repository/irole.repository';
 import { RoleRepository } from '../role/repository/role.repository';
 import { RoleService } from '../role/service/role.service';
 
-
 @Module({
   imports: [TypeOrmModule.forFeature([UsuarioEntity, RoleEntity])],
   controllers: [UsuarioController],
@@ -19,14 +18,14 @@ import { RoleService } from '../role/service/role.service';
     RoleService,
     {
       provide: IusuarioRepository,
-      useClass: UsuarioRepository
+      useClass: UsuarioRepository,
     },
     {
       provide: IroleRepository,
-      useClass: RoleRepository
-    }
+      useClass: RoleRepository,
+    },
   ],
-  exports: [UsuarioService]
+  exports: [UsuarioService],
 
 })
 export class UsuarioModule {

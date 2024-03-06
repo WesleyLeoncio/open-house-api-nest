@@ -14,7 +14,7 @@ import { UsuarioModule } from '../usuario/usuario.module';
     CategoriaService,
     {
       provide: IcategoriaRepository,
-      useClass: CategoriaRepository
+      useClass: CategoriaRepository,
     },
   ],
 })

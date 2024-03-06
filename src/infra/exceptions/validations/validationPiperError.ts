@@ -6,18 +6,16 @@ import { ValidationExeption } from '../ValidationExeption';
 
 export class ValidationPiperError implements IErrorResult {
 
-   validation(exception: unknown, ctx: HttpArgumentsHost,httpAdapter: any): ResponseMessage {
-    if (exception instanceof ValidationExeption){
+  validation(exception: unknown, ctx: HttpArgumentsHost, httpAdapter: any): ResponseMessage {
+    if (exception instanceof ValidationExeption) {
       return new ResponseMessage(
         exception.getStatus(),
         new Date().toISOString(),
         httpAdapter.getRequestUrl(ctx.getRequest()),
-        exception.message
-      )
+        exception.message,
+      );
     }
     return null;
   }
-
-
 
 }

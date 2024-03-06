@@ -1,4 +1,4 @@
-export enum CategoriaEnum{
+export enum CategoriaEnum {
   ACAO = 'ACAO',
   AVENTURA = 'AVENTURA',
   ANIMACAO = 'ANIMACAO',

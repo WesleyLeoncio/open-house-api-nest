@@ -26,9 +26,9 @@ export class FilmeRepository implements IfilmeRepository {
     return this.repository.delete(id);
   }
 
-  findAll(pagination: Pagination):Promise<[FilmeEntity[], number]> {
+  findAll(pagination: Pagination): Promise<[FilmeEntity[], number]> {
     return this.repository.findAndCount({
-      where: {'nome': Like('%' + pagination.filter + '%')},
+      where: { 'nome': Like('%' + pagination.filter + '%') },
       take: pagination.take,
       skip: pagination.skip,
       relations: {

@@ -17,7 +17,7 @@ export class FilmeEntity {
   @Column({ name: 'nome', length: 150, nullable: false, unique: true })
   nome: string;
 
-  @Column({ name: 'descricao', type: 'text', nullable: false})
+  @Column({ name: 'descricao', type: 'text', nullable: false })
   descricao: string;
 
   @Column({ name: 'data_lancamento', type: 'date', nullable: false })
@@ -29,11 +29,11 @@ export class FilmeEntity {
   @Column({ name: 'imagem', length: 100, nullable: false })
   imagem: string;
 
-  @ManyToMany(() => CategoriaEntity, { cascade: ["insert"] })
+  @ManyToMany(() => CategoriaEntity, { cascade: ['insert'] })
   @JoinTable({
     name: 'categoria_filme',
-    joinColumn: { name: 'filme_id', referencedColumnName: "id"},
-    inverseJoinColumn: { name: 'categoria_id',referencedColumnName: "id"},
+    joinColumn: { name: 'filme_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'categoria_id', referencedColumnName: 'id' },
   })
   categorias: CategoriaEntity[];
 

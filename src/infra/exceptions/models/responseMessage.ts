@@ -3,6 +3,7 @@ export class ResponseMessage {
   timestamp: string;
   path: any;
   message: string;
+
   constructor(statusCode: number, timestamp: string, path: any, message: string) {
     this.statusCode = statusCode;
     this.timestamp = timestamp;

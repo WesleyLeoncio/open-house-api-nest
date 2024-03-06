@@ -9,10 +9,10 @@ export class ValidationStrategy {
     this.validadores = valiadores;
   }
 
-  public verificarErros(exception: unknown, ctx: HttpArgumentsHost,httpAdapter: any): ResponseMessage{
-    for (const erro of this.validadores){
-      const response: ResponseMessage = erro.validation(exception,ctx,httpAdapter);
-      if (response){
+  public verificarErros(exception: unknown, ctx: HttpArgumentsHost, httpAdapter: any): ResponseMessage {
+    for (const erro of this.validadores) {
+      const response: ResponseMessage = erro.validation(exception, ctx, httpAdapter);
+      if (response) {
         return response;
       }
     }
