@@ -3,11 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinTable, ManyToMany,
+  JoinTable, ManyToMany, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { RoleEntity } from '../../../role/models/entity/role.entity';
+import { AvaliacaoDeFilmesEntity } from '../../../avaliacao/models/entity/avaliacaoDeFilmes.entity';
 
 @Entity({ name: 'usuarios' })
 export class UsuarioEntity {
@@ -33,6 +34,10 @@ export class UsuarioEntity {
     inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
   })
   roles: RoleEntity[];
+
+  @OneToMany(()=> AvaliacaoDeFilmesEntity,
+    (avaliacao) => avaliacao.usuario, {cascade: true, onDelete: 'CASCADE'})
+  avaliacoes: AvaliacaoDeFilmesEntity[];
 
 
   @CreateDateColumn({ name: 'created_at' })
