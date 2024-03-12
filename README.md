@@ -44,4 +44,4 @@ O desenvolvimento dessa API tem como objetivo criar uma aplicação que seja cap
 
 - Executa Migrations: `npm run typeorm migration:run`
 
-- Voltar Migrations: `npm run typeorm migration:revert`
+- Voltar Migrations: `npm run typeorm migration:revert` 
