@@ -18,6 +18,7 @@ O desenvolvimento dessa API tem como objetivo criar uma aplicação que seja cap
 - Autorização 
 - Autenticação 
 - Documentação - Swagger
+- Redis
 
 ### O QUE FOI DESENVOLVIDO
 - CRUD - FILMES
